@@ -1,39 +1,61 @@
+#hts {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#ht {
+  margin-top: 20px;
+}
+
 .title {
-  color: rgba(154, 117, 240, 1);
+  color: var(--theme-purple);
   font-family: 'Roboto', sans-serif;
-  margin-left: 10px;
-  font-weight: bold;
+}
+
+.nav-item {
+    font-size: large;
+    margin: 0px 20px 0px 20px;
 }
 
 .home {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content:center;
-  width: 80%;
-  margin-left: 10.5%;
+  width: 100%;
+  height: 400px;
+  background-color: var(--theme-background);
   font-family: 'Roboto', sans-serif;
-  line-height: normal;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   font-size: 60px;
   text-align: center;
-  background: rgba(154, 117, 240, 0.4);
-  padding-top: 2%;
-  padding-bottom: 2%;
+  padding: 10px 0px 10px 0px;
+}
+
+.tout {
+  color: var(--theme-purple);
+  font-family: 'Varela Round', sans-serif;
+}
+
+.frais {
+  color: var(--theme-blue);
+  font-family: 'Varela Round', sans-serif;
 }
 
 .btn {
-  margin-top: 1%;
+  background-color: var(--theme-purple);
   font-size: 20px;
+  color: white;
+  box-shadow: 2px 2px 5px grey;
   font-family: 'Roboto', sans-serif;
   padding: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
-.main-nav {
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  padding: 1%;
+p {
+    padding: 1%;
 }
+
+.nav-item nav-link active {
+    font-size: large;
+}
+

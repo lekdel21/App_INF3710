@@ -1,0 +1,29 @@
+<div id="list">
+  <h1>List of meal plan</h1>
+
+  <div class="divider"></div>
+
+  <table id="ht" align="center" border="1" width="1000" class="table-striped table-hover">
+    <thead class="header">
+    <th class="contentCell">NO. PLAN</th>
+    <th class="contentCell">NO. SUPPLIER</th>
+    <th class="contentCell">CATEGORY</th>
+    <th class="actionCell">FREQUENCE</th>
+    <th class="contentCell">NBR FREQUENCE</th>
+    <th class="contentCell">NBR CALORIES</th>
+    <th class="contentCell">PRICE</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let plan of plans; let i = index">
+        <td class="contentCell">{{ plan.numeroplan }}</td>
+        <td class="contentCell" contenteditable="true" (blur)="changePlanSupplier($event, i)">{{ plan.numerofournisseur}}</td>
+        <td class="contentCell" contenteditable="true" (blur)="changePlanCategory($event, i)">{{ plan.categorie }}</td>
+        <td class="contentCell" contenteditable="true" (blur)="changePlanFrequence($event, i)">{{ plan.frequence }}</td>
+        <td class="contentCell" contenteditable="true" (blur)="changePlanNbrFrequence($event, i)">{{ plan.nbrfrequence }}</td>
+        <td class="contentCell" contenteditable="true" (blur)="changePlanNbrCalories($event, i)">{{ plan.nbrcalories }}</td>
+        <td class="contentCell" contenteditable="true" (blur)="changePlanPrice($event, i)">{{ plan.prix }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

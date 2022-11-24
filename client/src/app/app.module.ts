@@ -8,10 +8,16 @@ import { AppComponent } from "./app.component";
 import { CommunicationService } from "./services/communication.service";
 import { AppMaterialModule } from './modules/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListComponent } from './list/list.component';
+import { AddComponent } from './add/add.component';
+import { ModifyComponent } from './modify/modify.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ListComponent,
+    AddComponent,
+    ModifyComponent
   ],
   imports: [
     CommonModule,

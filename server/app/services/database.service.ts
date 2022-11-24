@@ -6,12 +6,31 @@ import "reflect-metadata";
 export class DatabaseService {
   public connectionConfig: pg.ConnectionConfig = {
     user: "postgres",
-    database: "TP4",
+    database: "postgres",
     password: "root",
     port: 5432,          // Attention ! Peut aussi être 5433 pour certains utilisateurs
-    host: "127.0.0.1",
+      host: "localhost",
     keepAlive: true
   };
 
-  public pool: pg.Pool = new pg.Pool(this.connectionConfig);
+    public pool: pg.Pool = new pg.Pool(this.connectionConfig);
+
+    // Get PlanRepas. Also use to filter them.
+    public async filterPlans(numPlan: number, category: string = "", price: string = ""): Promise<pg.QueryResult> {
+        const client = await this.pool.connect();
+
+        const searchTerms: string[] = [];
+        if (numPlan >= 0) searchTerms.push(`numeroplan = '${numPlan}'`);
+        if (category.length > 0) searchTerms.push(`categorie = '${category}'`);
+        if (price.length > 0) searchTerms.push(`prix = '${price}'`);
+
+        let queryText = "SELECT * FROM TP4_database.Planrepas";
+        if (searchTerms.length > 0)
+            queryText += " WHERE " + searchTerms.join(" AND ");
+        queryText += ";";
+
+        const res = await client.query(queryText);
+        client.release();
+        return res;
+    }
 }
