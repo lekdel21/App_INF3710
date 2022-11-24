@@ -9,7 +9,7 @@ export class DatabaseService {
     database: "postgres",
     password: "root",
     port: 5432,          // Attention ! Peut aussi être 5433 pour certains utilisateurs
-      host: "localhost",
+    host: "localhost",
     keepAlive: true
   };
 

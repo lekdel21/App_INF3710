@@ -27,12 +27,12 @@ CREATE TABLE Fournisseur (
 );
 
 CREATE TABLE Planrepas (
-	numéroplan INT PRIMARY KEY,
-	numérofournisseur INT,
-	catégorie VARCHAR(20),
-	fréquence INT,
-	nbrfréquence INT,
-	nbrcalorie INT,
+	numeroplan INT PRIMARY KEY,
+	numerofournisseur INT,
+	categorie VARCHAR(20),
+	frequence INT,
+	nbrfrequence INT,
+	nbrcalories INT,
 	prix FLOAT CHECK(prix > 0),
 	CONSTRAINT numérofournisseur_FK FOREIGN KEY (numérofournisseur) REFERENCES Fournisseur
 );

@@ -24,6 +24,13 @@
 
 .contentCell {
   padding: 10px;
+  padding-left: 0px;
+  text-align: center;
+  color: black;
+}
+
+.actionCell {
+  text-align: center;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
