@@ -15,6 +15,14 @@ export class DatabaseService {
 
     public pool: pg.Pool = new pg.Pool(this.connectionConfig);
 
+    public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
+        const client = await this.pool.connect();
+        const res = await client.query(`SELECT * FROM LivraisonDB.${tableName};`);
+        client.release();
+        return res;
+    }
+
+
     // Get PlanRepas. Also use to filter them.
     public async filterPlans(numPlan: number, category: string = "", price: string = ""): Promise<pg.QueryResult> {
         const client = await this.pool.connect();

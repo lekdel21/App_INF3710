@@ -23,13 +23,21 @@ let DatabaseService = class DatabaseService {
     constructor() {
         this.connectionConfig = {
             user: "postgres",
-            database: "TP4_Livraison",
-            password: "Rap21tor",
+            database: "postgres",
+            password: "root",
             port: 5432,
-            host: "127.0.0.1",
+            host: "localhost",
             keepAlive: true
         };
         this.pool = new pg.Pool(this.connectionConfig);
+    }
+    getAllFromTable(tableName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const client = yield this.pool.connect();
+            const res = yield client.query(`SELECT * FROM LivraisonDB.${tableName};`);
+            client.release();
+            return res;
+        });
     }
     // Get PlanRepas. Also use to filter them.
     filterPlans(numPlan, category = "", price = "") {

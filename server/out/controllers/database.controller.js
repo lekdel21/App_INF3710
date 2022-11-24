@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DatabaseController = void 0;
 const express_1 = require("express");
 const inversify_1 = require("inversify");
+//import { PlanRepas } from "../../../common/tables/PlanRepas";
 const database_service_1 = require("../services/database.service");
 const types_1 = require("../types");
 let DatabaseController = class DatabaseController {
@@ -25,23 +26,11 @@ let DatabaseController = class DatabaseController {
     }
     get router() {
         const router = (0, express_1.Router)();
-        router.get("/List", (req, res, _) => {
-            var numPlan = req.params.numeroplan ? req.params.numeroplan : -1;
-            var category = req.params.categorie ? req.params.categorie : "";
-            var price = req.params.prix ? req.params.prix : "";
+        router.get("/list", (req, res, _) => {
             this.databaseService
-                .filterPlans(numPlan, category, price)
+                .getAllFromTable("planrepas")
                 .then((result) => {
-                const plans = result.rows.map((Planrepas) => ({
-                    numeroplan: Planrepas.numeroplan,
-                    numerofournisseur: Planrepas.numerofournisseur,
-                    categorie: Planrepas.categorie,
-                    frequence: Planrepas.frequence,
-                    nbrfrequence: Planrepas.nbrfrequence,
-                    nbrcalories: Planrepas.nbrcalories,
-                    prix: Planrepas.prix
-                }));
-                res.json(plans);
+                res.json(result.rows);
             })
                 .catch((e) => {
                 console.error(e.stack);
