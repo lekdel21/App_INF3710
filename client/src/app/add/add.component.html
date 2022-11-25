@@ -8,8 +8,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Choose id</mat-label>
       <mat-select>
-        <mat-option value="one">1</mat-option>
-        <mat-option value="two">2</mat-option>
+        <mat-option *ngFor="let plan of plans; let i = index;" value="{{i}}">{{plan.numerofournisseur}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
