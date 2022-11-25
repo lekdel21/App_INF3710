@@ -1,9 +1,9 @@
 export interface PlanRepas {
-    numeroplan: number;
-    numerofournisseur: number;
+    numeroplan: string;
+    numerofournisseur: string;
     categorie: string;
-    frequence: number;
-    nbrfrequence: number;
-    nbrcalories: number;
+    frequence: string;
+    nbrfrequence: string;
+    nbrcalories: string;
     prix: string;
 }
