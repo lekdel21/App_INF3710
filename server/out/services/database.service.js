@@ -31,6 +31,7 @@ let DatabaseService = class DatabaseService {
         };
         this.pool = new pg.Pool(this.connectionConfig);
     }
+    // get all plans repas
     getAllFromTable(tableName) {
         return __awaiter(this, void 0, void 0, function* () {
             const client = yield this.pool.connect();
@@ -39,22 +40,24 @@ let DatabaseService = class DatabaseService {
             return res;
         });
     }
-    // Get PlanRepas. Also use to filter them.
-    filterPlans(numPlan, category = "", price = "") {
+    // Add PlanRepas
+    createPlan(plan) {
         return __awaiter(this, void 0, void 0, function* () {
             const client = yield this.pool.connect();
-            const searchTerms = [];
-            if (numPlan >= 0)
-                searchTerms.push(`numeroplan = '${numPlan}'`);
-            if (category.length > 0)
-                searchTerms.push(`categorie = '${category}'`);
-            if (price.length > 0)
-                searchTerms.push(`prix = '${price}'`);
-            let queryText = "SELECT * FROM TP4_database.Planrepas";
-            if (searchTerms.length > 0)
-                queryText += " WHERE " + searchTerms.join(" AND ");
-            queryText += ";";
-            const res = yield client.query(queryText);
+            if (!plan.numeroplan || !plan.numerofournisseur || !plan.categorie || !plan.frequence ||
+                !plan.nbrfrequence || !plan.nbrcalories || !plan.prix)
+                throw new Error("Invalid create plan values");
+            const values = [
+                plan.numeroplan,
+                plan.numerofournisseur,
+                plan.categorie,
+                plan.frequence,
+                plan.nbrfrequence,
+                plan.nbrcalories,
+                plan.prix
+            ];
+            const queryText = `INSERT INTO LIVRAISONDB.PlanRepas VALUES($1, $2, $3, $4, $5, $6, $7);`;
+            const res = yield client.query(queryText, values);
             client.release();
             return res;
         });

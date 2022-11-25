@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DatabaseController = void 0;
 const express_1 = require("express");
 const inversify_1 = require("inversify");
-//import { PlanRepas } from "../../../common/tables/PlanRepas";
+//import { PlanRepas } from './../../../common/tables/Planrepas';
 const database_service_1 = require("../services/database.service");
 const types_1 = require("../types");
 let DatabaseController = class DatabaseController {
@@ -34,6 +34,26 @@ let DatabaseController = class DatabaseController {
             })
                 .catch((e) => {
                 console.error(e.stack);
+            });
+        });
+        router.post("/add", (req, res, _) => {
+            const plan = {
+                numeroplan: req.body.numeroplan,
+                numerofournisseur: req.body.numerofournisseur,
+                categorie: req.body.categorie,
+                frequence: req.body.frequence,
+                nbrfrequence: req.body.nbrfrequence,
+                nbrcalories: req.body.nbrcalories,
+                prix: req.body.prix,
+            };
+            this.databaseService
+                .createPlan(plan)
+                .then((result) => {
+                res.json(result.rowCount);
+            })
+                .catch((e) => {
+                console.error(e.stack);
+                res.json(-1);
             });
         });
         return router;
