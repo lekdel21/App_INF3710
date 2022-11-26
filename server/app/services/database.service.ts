@@ -2,7 +2,8 @@ import { injectable } from "inversify";
 import * as pg from "pg";
 import "reflect-metadata";
 
-//import { Plans } from "../../../common/tables/Planrepas";
+//import { PlanRepas } from "../../../common/tables/Planrepas";
+//import { Fournisseur } from "../../../common/tables/Fournisseur";
 
 interface PlanRepas {
     numeroplan: string;
@@ -27,7 +28,7 @@ export class DatabaseService {
 
     public pool: pg.Pool = new pg.Pool(this.connectionConfig);
 
-    // get all plans repas
+    //      ======== GET TABLE ========        //
     public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
         const client = await this.pool.connect();
         const res = await client.query(`SELECT * FROM LivraisonDB.${tableName};`);
@@ -35,7 +36,7 @@ export class DatabaseService {
         return res;
     }
 
-    // Add PlanRepas
+    //      ======== ADD ========        //
     public async createPlan(plan: PlanRepas): Promise<pg.QueryResult> {
         const client = await this.pool.connect();
 
@@ -59,4 +60,39 @@ export class DatabaseService {
         client.release();
         return res;
     }
+
+    //      ======== DELETE ========        //
+    public async deletePlan(planNb: string): Promise<pg.QueryResult> {
+        if (planNb.length === 0) throw new Error("Invalid delete query");
+
+        const client = await this.pool.connect();
+        const query = `DELETE FROM LIVRAISONDB.planrepas WHERE numeroplan = '${planNb}';`;
+
+        const res = await client.query(query);
+        client.release();
+        return res;
+    }
+
+    //      ======== UPDATE ========        //
+    public async updatePlan(plan: PlanRepas): Promise<pg.QueryResult> {
+        const client = await this.pool.connect();
+
+        let toUpdateValues = [];
+
+        if (plan.numerofournisseur.length > 0) toUpdateValues.push(`name = '${plan.numerofournisseur}'`);
+        if (plan.categorie.length > 0) toUpdateValues.push(`city = '${plan.categorie}'`);
+        if (plan.frequence.length > 0) toUpdateValues.push(`name = '${plan.frequence}'`);
+        if (plan.nbrfrequence.length > 0) toUpdateValues.push(`city = '${plan.nbrfrequence}'`);
+        if (plan.nbrcalories.length > 0) toUpdateValues.push(`name = '${plan.nbrcalories}'`);
+        if (plan.prix.length > 0) toUpdateValues.push(`city = '${plan.prix}'`);
+
+        if (!plan.numeroplan || plan.numeroplan.length === 0 || toUpdateValues.length === 0)
+            throw new Error("Invalid plan update query");
+
+        const query = `UPDATE LivraisonDB.planrepas SET ${toUpdateValues.join(", ")} WHERE numeroplan = '${plan.numeroplan}';`;
+        const res = await client.query(query);
+        client.release();
+        return res;
+    }
+
 }

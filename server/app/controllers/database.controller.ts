@@ -28,6 +28,7 @@ export class DatabaseController {
   public get router(): Router {
     const router: Router = Router();
 
+      //      ======== PLANREPAS ========        //
       router.get("/list", (req: Request, res: Response, _: NextFunction) => {
           this.databaseService
               .getAllFromTable("planrepas")
@@ -63,6 +64,53 @@ export class DatabaseController {
           }
       );
 
+      router.post("/delete/:planNb", (req: Request, res: Response, _: NextFunction) => {
+              const planNb: string = req.params.numeroplan;
+              this.databaseService
+                  .deletePlan(planNb)
+                  .then((result: pg.QueryResult) => {
+                      res.json(result.rowCount);
+                  })
+                  .catch((e: Error) => {
+                      console.error(e.stack);
+                  });
+          }
+      );
+
+      router.put("/modify", (req: Request, res: Response, _: NextFunction) => {
+              const plan: PlanRepas = {
+                  numeroplan: req.body.numeroplan,
+                  numerofournisseur: req.body.numerofournisseur ? req.body.numerofournisseur : "",
+                  categorie: req.body.categorie ? req.body.categorie : "",
+                  frequence: req.body.frequence,
+                  nbrfrequence: req.body.nbrfrequence ? req.body.nbrfrequence : "",
+                  nbrcalories: req.body.nbrcalories ? req.body.nbrcalories : "",
+                  prix: req.body.prix ? req.body.prix : "",
+              };
+
+              this.databaseService
+                  .updatePlan(plan)
+                  .then((result: pg.QueryResult) => {
+                      res.json(result.rowCount);
+                  })
+                  .catch((e: Error) => {
+                      console.error(e.stack);
+                  });
+          }
+      );
+
+      //      ======== FOURNISSEUR ========        //
+      router.get("/add", (req: Request, res: Response, _: NextFunction) => {
+          this.databaseService
+              .getAllFromTable("fournisseur")
+              .then((result: pg.QueryResult) => {
+                  res.json(result.rows);
+              })
+              .catch((e: Error) => {
+                  console.error(e.stack);
+              });
+
+      });
 
       return router;
     }

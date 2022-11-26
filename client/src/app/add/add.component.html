@@ -4,11 +4,11 @@
 </div>
 <div id="form">
   <div class="row">
-    <h2>Choose the supplier id from the list below:</h2>
+    <h2>Choose the supplier name from the list below:</h2>
     <mat-form-field appearance="fill">
-      <mat-label>Choose id</mat-label>
+      <mat-label>Choose a supplier</mat-label>
       <mat-select>
-        <mat-option *ngFor="let plan of plans; let i = index;" value="{{i}}">{{plan.numerofournisseur}}</mat-option>
+        <mat-option *ngFor="let f of fournisseur; let i = index;" value="{{f.numerofournisseur}}">{{f.nomfournisseur}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>

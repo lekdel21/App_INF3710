@@ -26,6 +26,7 @@ let DatabaseController = class DatabaseController {
     }
     get router() {
         const router = (0, express_1.Router)();
+        //      ======== PLANREPAS ========        //
         router.get("/list", (req, res, _) => {
             this.databaseService
                 .getAllFromTable("planrepas")
@@ -54,6 +55,47 @@ let DatabaseController = class DatabaseController {
                 .catch((e) => {
                 console.error(e.stack);
                 res.json(-1);
+            });
+        });
+        router.post("/delete/:planNb", (req, res, _) => {
+            const planNb = req.params.numeroplan;
+            this.databaseService
+                .deletePlan(planNb)
+                .then((result) => {
+                res.json(result.rowCount);
+            })
+                .catch((e) => {
+                console.error(e.stack);
+            });
+        });
+        router.put("/modify", (req, res, _) => {
+            const plan = {
+                numeroplan: req.body.numeroplan,
+                numerofournisseur: req.body.numerofournisseur ? req.body.numerofournisseur : "",
+                categorie: req.body.categorie ? req.body.categorie : "",
+                frequence: req.body.frequence,
+                nbrfrequence: req.body.nbrfrequence ? req.body.nbrfrequence : "",
+                nbrcalories: req.body.nbrcalories ? req.body.nbrcalories : "",
+                prix: req.body.prix ? req.body.prix : "",
+            };
+            this.databaseService
+                .updatePlan(plan)
+                .then((result) => {
+                res.json(result.rowCount);
+            })
+                .catch((e) => {
+                console.error(e.stack);
+            });
+        });
+        //      ======== FOURNISSEUR ========        //
+        router.get("/add", (req, res, _) => {
+            this.databaseService
+                .getAllFromTable("fournisseur")
+                .then((result) => {
+                res.json(result.rows);
+            })
+                .catch((e) => {
+                console.error(e.stack);
             });
         });
         return router;

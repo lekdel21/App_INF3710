@@ -2,6 +2,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError } from "rxjs/operators";
+import { Fournisseur } from "../../../../common/tables/Fournisseur";
 import { PlanRepas } from "../../../../common/tables/Planrepas";
 import { of, Observable, Subject } from "rxjs";
 
@@ -25,6 +26,12 @@ export class CommunicationService {
     return this.http
       .get<PlanRepas[]>(this.BASE_URL + "/list")
       .pipe(catchError(this.handleError<PlanRepas[]>("getPlans")));
+  }
+
+  public getFournisseurs(): Observable<Fournisseur[]> {
+    return this.http
+      .get<Fournisseur[]>(this.BASE_URL + "/add")
+      .pipe(catchError(this.handleError<Fournisseur[]>("getFournisseurs")));
   }
 
   // À DÉCOMMENTER ET À UTILISER LORSQUE VOTRE COMMUNICATION EST IMPLÉMENTÉE
