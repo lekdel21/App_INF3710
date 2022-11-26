@@ -22,9 +22,17 @@ export class CommunicationService {
     this._listeners.next(filterBy);
   }
 
+  //      ======== LIST ========        //
   public getPlans(): Observable<PlanRepas[]> {
     return this.http
       .get<PlanRepas[]>(this.BASE_URL + "/list")
+      .pipe(catchError(this.handleError<PlanRepas[]>("getPlans")));
+  }
+
+  //      ======== ADD ========        //
+  public getCategories(): Observable<PlanRepas[]> {
+    return this.http
+      .get<PlanRepas[]>(this.BASE_URL + "/add:Categories")
       .pipe(catchError(this.handleError<PlanRepas[]>("getPlans")));
   }
 

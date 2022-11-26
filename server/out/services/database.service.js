@@ -99,6 +99,24 @@ let DatabaseService = class DatabaseService {
             return res;
         });
     }
+    //      ======== GET CATEGORIES ========        //
+    getCategories() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const client = yield this.pool.connect();
+            const res = yield client.query("SELECT DISTINCT categorie FROM LIVRAISONDB.planrepas;");
+            client.release();
+            return res;
+        });
+    }
+    //      ======== GET CATEGORIES ========        //
+    getFournisseurs() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const client = yield this.pool.connect();
+            const res = yield client.query("SELECT DISTINCT nomfournisseur FROM LIVRAISONDB.fournisseur;");
+            client.release();
+            return res;
+        });
+    }
 };
 DatabaseService = __decorate([
     (0, inversify_1.injectable)()

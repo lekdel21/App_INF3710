@@ -11,14 +11,14 @@ import { CommunicationService } from "../services/communication.service";
 })
 export class AddComponent implements OnInit {
 
-  public plan: PlanRepas[] = [];
+  public categories: PlanRepas[] = [];
   public fournisseur: Fournisseur[] = [];
 
   constructor(private communicationService: CommunicationService) { }
 
   ngOnInit(): void {
     this.getFournisseurs();
-    this.getPlans();
+    this.getCategories();
   }
 
   public getFournisseurs(): void {
@@ -27,9 +27,9 @@ export class AddComponent implements OnInit {
     });
   }
 
-  public getPlans(): void {
-    this.communicationService.getPlans().subscribe((plan: PlanRepas[]) => {
-      this.plan = plan;
+  public getCategories(): void {
+    this.communicationService.getCategories().subscribe((categories: PlanRepas[]) => {
+      this.categories = categories;
     });
   }
 }

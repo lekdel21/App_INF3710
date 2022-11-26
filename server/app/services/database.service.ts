@@ -95,4 +95,20 @@ export class DatabaseService {
         return res;
     }
 
+    //      ======== GET CATEGORIES ========        //
+    public async getCategories(): Promise<pg.QueryResult> {
+        const client = await this.pool.connect();
+        const res = await client.query("SELECT DISTINCT categorie FROM LIVRAISONDB.planrepas;");
+        client.release();
+        return res;
+    }
+
+    //      ======== GET CATEGORIES ========        //
+    public async getFournisseurs(): Promise<pg.QueryResult> {
+        const client = await this.pool.connect();
+        const res = await client.query("SELECT DISTINCT nomfournisseur FROM LIVRAISONDB.fournisseur;");
+        client.release();
+        return res;
+    }
+
 }

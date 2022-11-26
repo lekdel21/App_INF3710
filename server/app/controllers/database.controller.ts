@@ -3,6 +3,7 @@ import { inject, injectable } from "inversify";
 import * as pg from "pg";
 
 //import { PlanRepas } from './../../../common/tables/Planrepas';
+//import { Fournisseur } from './../../../common/tables/Fournisseur';
 
 import { DatabaseService } from "../services/database.service";
 import Types from "../types";
@@ -15,6 +16,12 @@ interface PlanRepas {       // Je suis obligé de le mettre directement ici, je 
     nbrfrequence: string;
     nbrcalories: string;
     prix: string;
+}
+
+export interface Fournisseur {
+    numerofournisseur: string;
+    nomfournisseur: string;
+    adressefournisseur: string;
 }
 
 
@@ -40,6 +47,22 @@ export class DatabaseController {
               });
           
       });
+
+      router.get("/add:Categories",(req: Request, res: Response, _: NextFunction) => {
+              this.databaseService
+                  .getCategories()
+                  .then((result: pg.QueryResult) => {
+                      const categories = result.rows.map((plan: PlanRepas) => ({
+                          categorie: plan.categorie,
+                      }));
+                      res.json(categories);
+                  })
+
+                  .catch((e: Error) => {
+                      console.error(e.stack);
+                  });
+              }
+      );
 
       router.post("/add", (req: Request, res: Response, _: NextFunction) => {
               const plan: PlanRepas = {
@@ -102,15 +125,19 @@ export class DatabaseController {
       //      ======== FOURNISSEUR ========        //
       router.get("/add", (req: Request, res: Response, _: NextFunction) => {
           this.databaseService
-              .getAllFromTable("fournisseur")
+              .getFournisseurs()
               .then((result: pg.QueryResult) => {
-                  res.json(result.rows);
+                  const fournisseurs = result.rows.map((fournisseur: Fournisseur) => ({
+                      nomfournisseur: fournisseur.nomfournisseur,
+                  }));
+                  res.json(fournisseurs.filter(function (fournisseur) { return fournisseur.nomfournisseur != null; }));
               })
+
               .catch((e: Error) => {
                   console.error(e.stack);
               });
-
-      });
+      }
+      );
 
       return router;
     }

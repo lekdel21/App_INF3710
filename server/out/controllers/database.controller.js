@@ -16,6 +16,7 @@ exports.DatabaseController = void 0;
 const express_1 = require("express");
 const inversify_1 = require("inversify");
 //import { PlanRepas } from './../../../common/tables/Planrepas';
+//import { Fournisseur } from './../../../common/tables/Fournisseur';
 const database_service_1 = require("../services/database.service");
 const types_1 = require("../types");
 let DatabaseController = class DatabaseController {
@@ -32,6 +33,19 @@ let DatabaseController = class DatabaseController {
                 .getAllFromTable("planrepas")
                 .then((result) => {
                 res.json(result.rows);
+            })
+                .catch((e) => {
+                console.error(e.stack);
+            });
+        });
+        router.get("/add:Categories", (req, res, _) => {
+            this.databaseService
+                .getCategories()
+                .then((result) => {
+                const categories = result.rows.map((plan) => ({
+                    categorie: plan.categorie,
+                }));
+                res.json(categories);
             })
                 .catch((e) => {
                 console.error(e.stack);
@@ -90,9 +104,12 @@ let DatabaseController = class DatabaseController {
         //      ======== FOURNISSEUR ========        //
         router.get("/add", (req, res, _) => {
             this.databaseService
-                .getAllFromTable("fournisseur")
+                .getFournisseurs()
                 .then((result) => {
-                res.json(result.rows);
+                const fournisseurs = result.rows.map((fournisseur) => ({
+                    nomfournisseur: fournisseur.nomfournisseur,
+                }));
+                res.json(fournisseurs.filter(function (fournisseur) { return fournisseur.nomfournisseur != null; }));
             })
                 .catch((e) => {
                 console.error(e.stack);
