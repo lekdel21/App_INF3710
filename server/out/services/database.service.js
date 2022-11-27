@@ -53,7 +53,7 @@ let DatabaseService = class DatabaseService {
             const frequence = parseInt(plan.frequence);
             const nbrfrequence = parseInt(plan.nbrfrequence);
             const nbrcalories = parseInt(plan.nbrcalories);
-            const prix = parseInt(plan.prix);
+            const prix = parseFloat(plan.prix).toFixed(2);
             const queryText = `INSERT INTO LIVRAISONDB.Planrepas VALUES(${numeroplan.rows[0].max + 1}, ${numerofournisseur}, ${categorie},
         ${frequence}, ${nbrfrequence}, ${nbrcalories}, ${prix});`;
             const res = yield client.query(queryText);

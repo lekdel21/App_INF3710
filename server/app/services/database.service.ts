@@ -40,7 +40,6 @@ export class DatabaseService {
     public async createPlan(plan: PlanRepas): Promise<pg.QueryResult> {
         const client = await this.pool.connect();
 
-
         if (!plan.numerofournisseur || !plan.categorie || !plan.frequence ||
             !plan.nbrfrequence || !plan.nbrcalories || !plan.prix)
             throw new Error("Invalid create plan values");
@@ -51,7 +50,7 @@ export class DatabaseService {
         const frequence = parseInt(plan.frequence);
         const nbrfrequence = parseInt(plan.nbrfrequence);
         const nbrcalories = parseInt(plan.nbrcalories);
-        const prix = parseInt(plan.prix);
+        const prix = parseFloat(plan.prix).toFixed(2);
 
         const queryText: string = `INSERT INTO LIVRAISONDB.Planrepas VALUES(${numeroplan.rows[0].max + 1}, ${numerofournisseur}, ${categorie},
         ${frequence}, ${nbrfrequence}, ${nbrcalories}, ${prix});`;

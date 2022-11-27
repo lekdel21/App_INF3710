@@ -53,7 +53,7 @@ export class AddComponent implements OnInit {
     this.nbrfrequence.nativeElement.value = "10";
     this.frequence.nativeElement.value = "2";
     this.nbrcalories.nativeElement.value = "500";
-    this.prix.nativeElement.value = "100.00";
+    this.prix.nativeElement.value = "10.00";
   }
 
   public insertPlan(): void {
