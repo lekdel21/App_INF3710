@@ -42,6 +42,13 @@ export class CommunicationService {
       .pipe(catchError(this.handleError<Fournisseur[]>("getFournisseurs")));
   }
 
+  public insertPlan(plan: PlanRepas): Observable<number> {
+    return this.http
+      .post<number>(this.BASE_URL + "/add", plan)
+      .pipe(catchError(this.handleError<number>("insertPlan")));
+  }
+
+
   // À DÉCOMMENTER ET À UTILISER LORSQUE VOTRE COMMUNICATION EST IMPLÉMENTÉE
   private handleError<T>(
     request: string,

@@ -107,6 +107,7 @@ let DatabaseController = class DatabaseController {
                 .getFournisseurs()
                 .then((result) => {
                 const fournisseurs = result.rows.map((fournisseur) => ({
+                    numerofournisseur: fournisseur.numerofournisseur,
                     nomfournisseur: fournisseur.nomfournisseur,
                 }));
                 res.json(fournisseurs.filter(function (fournisseur) { return fournisseur.nomfournisseur != null; }));

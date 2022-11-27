@@ -7,8 +7,8 @@
     <h2>Choose the supplier name from the list below:</h2>
     <mat-form-field appearance="fill">
       <mat-label>Choose a supplier</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let f of fournisseur;">{{f.nomfournisseur}}</mat-option>
+      <mat-select [(value)]="supplier">
+        <mat-option *ngFor="let f of fournisseur;" value="{{f.numerofournisseur}}">{{f.nomfournisseur}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -16,8 +16,8 @@
     <h2>Register the meal plan category:</h2>
     <mat-form-field appearance="fill">
       <mat-label>Choose a category</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let c of categories;">{{c.categorie}}</mat-option>
+      <mat-select [(value)]="category">
+        <mat-option *ngFor="let c of plans;" value="{{c.categorie}}" >{{c.categorie}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -25,29 +25,29 @@
     <h2>Register the frequence:</h2>
     <mat-form-field class="input" appearance="fill">
       <mat-label>Input frequence</mat-label>
-      <input value="2" matInput>
+      <input value="2" #frequence matInput>
     </mat-form-field>
   </div>
   <div class="row">
     <h2>Register the number of frequence:</h2>
     <mat-form-field class="input" appearance="fill">
       <mat-label>Input frequence number</mat-label>
-      <input value="10" matInput>
+      <input value="10" #nbrfrequence matInput>
     </mat-form-field>
   </div>
   <div class="row">
     <h2>Register the calories that the meal plan contains:</h2>
     <mat-form-field class="input" appearance="fill">
       <mat-label>Input calories</mat-label>
-      <input value="500" matInput>
+      <input value="500" #nbrcalories matInput>
     </mat-form-field>
   </div>
   <div class="row">
     <h2>Register the price of the meal plan:</h2>
     <mat-form-field class="input" appearance="fill">
       <mat-label>Input price</mat-label>
-      <input value="100.00" matInput>
+      <input value="100.00" #prix matInput>
     </mat-form-field>
   </div>
-  <button mat-raised-button id="button">ADD</button>
+  <button mat-raised-button id="button" (click)="insertPlan()">ADD</button>
 </div>

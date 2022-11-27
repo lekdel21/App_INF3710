@@ -40,23 +40,24 @@ export class DatabaseService {
     public async createPlan(plan: PlanRepas): Promise<pg.QueryResult> {
         const client = await this.pool.connect();
 
-        if (!plan.numeroplan || !plan.numerofournisseur || !plan.categorie || !plan.frequence ||
+
+        if (!plan.numerofournisseur || !plan.categorie || !plan.frequence ||
             !plan.nbrfrequence || !plan.nbrcalories || !plan.prix)
             throw new Error("Invalid create plan values");
 
-        const values: string[] = [
-            plan.numeroplan,
-            plan.numerofournisseur,
-            plan.categorie,
-            plan.frequence,
-            plan.nbrfrequence,
-            plan.nbrcalories,
-            plan.prix
-        ];
+        const numeroplan = await this.getNextPlanId();
+        const numerofournisseur = parseInt(plan.numerofournisseur);
+        const categorie = "'" + plan.categorie + "'";
+        const frequence = parseInt(plan.frequence);
+        const nbrfrequence = parseInt(plan.nbrfrequence);
+        const nbrcalories = parseInt(plan.nbrcalories);
+        const prix = parseInt(plan.prix);
 
-        const queryText: string = `INSERT INTO LIVRAISONDB.PlanRepas VALUES($1, $2, $3, $4, $5, $6, $7);`;
+        const queryText: string = `INSERT INTO LIVRAISONDB.Planrepas VALUES(${numeroplan.rows[0].max + 1}, ${numerofournisseur}, ${categorie},
+        ${frequence}, ${nbrfrequence}, ${nbrcalories}, ${prix});`;
 
-        const res = await client.query(queryText, values);
+        const res = await client.query(queryText);
+        
         client.release();
         return res;
     }
@@ -79,12 +80,12 @@ export class DatabaseService {
 
         let toUpdateValues = [];
 
-        if (plan.numerofournisseur.length > 0) toUpdateValues.push(`name = '${plan.numerofournisseur}'`);
-        if (plan.categorie.length > 0) toUpdateValues.push(`city = '${plan.categorie}'`);
-        if (plan.frequence.length > 0) toUpdateValues.push(`name = '${plan.frequence}'`);
-        if (plan.nbrfrequence.length > 0) toUpdateValues.push(`city = '${plan.nbrfrequence}'`);
-        if (plan.nbrcalories.length > 0) toUpdateValues.push(`name = '${plan.nbrcalories}'`);
-        if (plan.prix.length > 0) toUpdateValues.push(`city = '${plan.prix}'`);
+        if (plan.numerofournisseur.length > 0) toUpdateValues.push(`numerofournisseur = '${plan.numerofournisseur}'`);
+        if (plan.categorie.length > 0) toUpdateValues.push(`categorie = '${plan.categorie}'`);
+        if (plan.frequence.length > 0) toUpdateValues.push(`frequence = '${plan.frequence}'`);
+        if (plan.nbrfrequence.length > 0) toUpdateValues.push(`nbrfrequence = '${plan.nbrfrequence}'`);
+        if (plan.nbrcalories.length > 0) toUpdateValues.push(`nbrcalories = '${plan.nbrcalories}'`);
+        if (plan.prix.length > 0) toUpdateValues.push(`prix = '${plan.prix}'`);
 
         if (!plan.numeroplan || plan.numeroplan.length === 0 || toUpdateValues.length === 0)
             throw new Error("Invalid plan update query");
@@ -103,10 +104,17 @@ export class DatabaseService {
         return res;
     }
 
-    //      ======== GET CATEGORIES ========        //
+    //      ======== GET FOURNISSEURS ========        //
     public async getFournisseurs(): Promise<pg.QueryResult> {
         const client = await this.pool.connect();
-        const res = await client.query("SELECT DISTINCT nomfournisseur FROM LIVRAISONDB.fournisseur;");
+        const res = await client.query("SELECT DISTINCT numerofournisseur, nomfournisseur FROM LIVRAISONDB.fournisseur;");
+        client.release();
+        return res;
+    }
+
+    public async getNextPlanId(): Promise<pg.QueryResult>{
+        const client = await this.pool.connect();
+        const res = await client.query("SELECT MAX(numeroplan) FROM LIVRAISONDB.planrepas;");
         client.release();
         return res;
     }

@@ -128,6 +128,7 @@ export class DatabaseController {
               .getFournisseurs()
               .then((result: pg.QueryResult) => {
                   const fournisseurs = result.rows.map((fournisseur: Fournisseur) => ({
+                      numerofournisseur: fournisseur.numerofournisseur,
                       nomfournisseur: fournisseur.nomfournisseur,
                   }));
                   res.json(fournisseurs.filter(function (fournisseur) { return fournisseur.nomfournisseur != null; }));
