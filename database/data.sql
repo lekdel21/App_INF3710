@@ -71,11 +71,3 @@ INSERT INTO Contenir VALUES (01, 01);
 INSERT INTO Contenir VALUES (02, 01);
 INSERT INTO Contenir VALUES (02, 02);
 INSERT INTO Contenir VALUES (03, 00);
-
-
-
-
-
-
-
-

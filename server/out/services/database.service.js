@@ -25,7 +25,7 @@ let DatabaseService = class DatabaseService {
             user: "postgres",
             database: "postgres",
             password: "root",
-            port: 5433,
+            port: 5432,
             host: "localhost",
             keepAlive: true
         };

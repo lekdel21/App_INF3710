@@ -24,7 +24,6 @@ export interface Fournisseur {
     adressefournisseur: string;
 }
 
-
 @injectable()
 export class DatabaseController {
   public constructor(
