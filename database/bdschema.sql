@@ -4,24 +4,24 @@ DROP SCHEMA IF EXISTS LIVRAISONDB CASCADE;
 CREATE SCHEMA LIVRAISONDB;
 
 CREATE TABLE Client (
-	numéroclient INT PRIMARY KEY,
+	numeroclient INT PRIMARY KEY,
 	nomclient VARCHAR(20) NOT NULL,
-	prénomclient VARCHAR(20) NOT NULL,
+	prenomclient VARCHAR(20) NOT NULL,
 	adressecourrielclient VARCHAR(50),
 	rueclient VARCHAR(20),
 	villeclient VARCHAR(20),
 	codepostalclient VARCHAR(6)
 );
 
-CREATE TABLE Téléphone (
-	numérotéléphone VARCHAR(10),
-	numéroclient INT,
-	CONSTRAINT LF_PK PRIMARY KEY (numérotéléphone, numéroclient),
-	CONSTRAINT numéroclient_FK FOREIGN KEY (numéroclient) REFERENCES Client
+CREATE TABLE Telephone (
+	numerotelephone VARCHAR(10),
+	numeroclient INT,
+	CONSTRAINT LF_PK PRIMARY KEY (numerotelephone, numeroclient),
+	CONSTRAINT numeroclient_FK FOREIGN KEY (numeroclient) REFERENCES Client
 );
 
 CREATE TABLE Fournisseur (
-	numérofournisseur INT PRIMARY KEY,
+	numerofournisseur INT PRIMARY KEY,
 	nomfournisseur VARCHAR(20),
 	adressefournisseur VARCHAR (50)
 );
@@ -34,77 +34,77 @@ CREATE TABLE Planrepas (
 	nbrfrequence INT,
 	nbrcalories INT,
 	prix FLOAT CHECK(prix > 0),
-	CONSTRAINT numérofournisseur_FK FOREIGN KEY (numérofournisseur) REFERENCES Fournisseur
+	CONSTRAINT numerofournisseur_FK FOREIGN KEY (numerofournisseur) REFERENCES Fournisseur
 );
 
-CREATE TABLE Ingrédient (
-	numéroingrédient INT PRIMARY KEY,
-	nomingrédient VARCHAR(20) NOT NULL,
-	paysingrédient VARCHAR(20)
+CREATE TABLE Ingredient (
+	numeroingredient INT PRIMARY KEY,
+	nomingredient VARCHAR(20) NOT NULL,
+	paysingredient VARCHAR(20)
 );
 
 CREATE TABLE Kitrepas (
-	numérokitrepas INT PRIMARY KEY,
-	numéroplan INT NOT NULL,
+	numerokitrepas INT PRIMARY KEY,
+	numeroplan INT NOT NULL,
 	description VARCHAR(100),
-	CONSTRAINT numéroplan_FK FOREIGN KEY (numéroplan) REFERENCES Planrepas
+	CONSTRAINT numeroplan_FK FOREIGN KEY (numeroplan) REFERENCES Planrepas
 );
 
 CREATE TABLE Famille (
-	numéroplan INT PRIMARY KEY,
-	CONSTRAINT numéroplan_PK FOREIGN KEY (numéroplan) REFERENCES Planrepas
+	numeroplan INT PRIMARY KEY,
+	CONSTRAINT numeroplan_PK FOREIGN KEY (numeroplan) REFERENCES Planrepas
 );
 
-CREATE TABLE Végétarien (
-	numéroplan INT PRIMARY KEY,
+CREATE TABLE Vegetarien (
+	numeroplan INT PRIMARY KEY,
 	typederepas VARCHAR(30),
-	CONSTRAINT numéroplan_PK FOREIGN KEY (numéroplan) REFERENCES Planrepas
+	CONSTRAINT numeroplan_PK FOREIGN KEY (numeroplan) REFERENCES Planrepas
 );
 
-CREATE TABLE Pescétarien (
-	numéroplan INT PRIMARY KEY,
+CREATE TABLE Pescetarien (
+	numeroplan INT PRIMARY KEY,
 	typepoisson VARCHAR(30),
-	CONSTRAINT numéroplan_PK FOREIGN KEY (numéroplan) REFERENCES Planrepas
+	CONSTRAINT numeroplan_PK FOREIGN KEY (numeroplan) REFERENCES Planrepas
 );
 
 CREATE TABLE Rapide (
-	numéroplan INT PRIMARY KEY,
-	tempsdepréparation INT,
-	CONSTRAINT numéroplan_PK FOREIGN KEY (numéroplan) REFERENCES Famille
+	numeroplan INT PRIMARY KEY,
+	tempsdepreparation INT,
+	CONSTRAINT numeroplan_PK FOREIGN KEY (numeroplan) REFERENCES Famille
 );
 
 CREATE TABLE Facile (
-	numéroplan INT PRIMARY KEY,
-	nbringrédients INT,
-	CONSTRAINT numéroplan_PK FOREIGN KEY (numéroplan) REFERENCES Famille
+	numeroplan INT PRIMARY KEY,
+	nbringredients INT,
+	CONSTRAINT numeroplan_PK FOREIGN KEY (numeroplan) REFERENCES Famille
 );
 
 CREATE TABLE Image (
-	numéroimage INT PRIMARY KEY,
-	numérokitrepas INT,
-	CONSTRAINT numérokitrepas_FK FOREIGN KEY (numérokitrepas) REFERENCES Kitrepas
+	numeroimage INT PRIMARY KEY,
+	numerokitrepas INT,
+	CONSTRAINT numerokitrepas_FK FOREIGN KEY (numerokitrepas) REFERENCES Kitrepas
 ); 
 
-CREATE TABLE Étape (
-	numérokitrepas INT,
-	descriptionétape VARCHAR(50),
-	duréétape INT,
-	CONSTRAINT numérokitrepas_PK FOREIGN KEY (numérokitrepas) REFERENCES Kitrepas
+CREATE TABLE Etape (
+	numerokitrepas INT,
+	descriptionetape VARCHAR(50),
+	dureetape INT,
+	CONSTRAINT numerokitrepas_PK FOREIGN KEY (numerokitrepas) REFERENCES Kitrepas
 );
 
 CREATE TABLE Abonner (
-	numéroclient INT,
-	numéroplan INT,
-	durée INT NOT NULL,
-	PRIMARY KEY (numéroclient, numéroplan),
-	CONSTRAINT numéroclient_FK FOREIGN KEY (numéroclient) REFERENCES Client,
-	CONSTRAINT numéroplan_FK FOREIGN KEY (numéroplan) REFERENCES Planrepas
+	numeroclient INT,
+	numeroplan INT,
+	duree INT NOT NULL,
+	PRIMARY KEY (numeroclient, numeroplan),
+	CONSTRAINT numeroclient_FK FOREIGN KEY (numeroclient) REFERENCES Client,
+	CONSTRAINT numeroplan_FK FOREIGN KEY (numeroplan) REFERENCES Planrepas
 );
 
 CREATE TABLE Contenir (
-	numérokitrepas INT,
-	numéroingrédient INT,
-	PRIMARY KEY (numérokitrepas, numéroingrédient),
-	CONSTRAINT numérokitrepas_FK FOREIGN KEY (numérokitrepas) REFERENCES Kitrepas,
-	CONSTRAINT numéroingrédient_FK FOREIGN KEY (numéroingrédient) REFERENCES Ingrédient
+	numerokitrepas INT,
+	numeroingredient INT,
+	PRIMARY KEY (numerokitrepas, numeroingredient),
+	CONSTRAINT numerokitrepas_FK FOREIGN KEY (numerokitrepas) REFERENCES Kitrepas,
+	CONSTRAINT numeroingredient_FK FOREIGN KEY (numeroingredient) REFERENCES Ingredient
 );

@@ -11,13 +11,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListComponent } from './list/list.component';
 import { AddComponent } from './add/add.component';
 import { ModifyComponent } from './modify/modify.component';
+import { DeleteComponent } from './delete/delete.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
     AddComponent,
-    ModifyComponent
+    ModifyComponent,
+    DeleteComponent
   ],
   imports: [
     CommonModule,

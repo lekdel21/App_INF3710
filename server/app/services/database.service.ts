@@ -21,13 +21,13 @@ export class DatabaseService {
         user: "postgres",
         database: "postgres",
         password: "root",
-        port: 5432,          // Attention ! Peut aussi être 5433 pour certains utilisateurs
+        port: 5433,          // Attention ! Peut aussi être 5433 pour certains utilisateurs
         host: "localhost",
         keepAlive: true
     };
-
+    
     public pool: pg.Pool = new pg.Pool(this.connectionConfig);
-
+    
     //      ======== GET TABLE ========        //
     public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
         const client = await this.pool.connect();

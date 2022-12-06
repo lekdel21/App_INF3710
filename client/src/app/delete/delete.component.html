@@ -1,0 +1,30 @@
+<div id="title">
+    <h1>Delete meal plan(s)</h1>
+    <div class="divider"></div>
+  </div>
+  <div id="list">
+    <table id="ht" align="center" border="3" width="1200" class="table-striped table-hover">
+      <thead class="header">
+      <th class="actionCell">NO. PLAN</th>
+      <th class="actionCell">NO. SUPPLIER</th>
+      <th class="actionCell">CATEGORY</th>
+      <th class="actionCell">FREQUENCE</th>
+      <th class="actionCell">NBR FREQUENCE</th>
+      <th class="actionCell">CALORIES</th>
+      <th class="actionCell">PRICE ($)</th>
+      <th class="actionCell">ACTION</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let plan of plans; let i = index">
+          <td class="contentCell">{{ plan.numeroplan }}</td>
+          <td class="contentCell">{{ plan.numerofournisseur}}</td>
+          <td class="contentCell">{{ plan.categorie }}</td>
+          <td class="contentCell">{{ plan.frequence }}</td>
+          <td class="contentCell">{{ plan.nbrfrequence }}</td>
+          <td class="contentCell">{{ plan.nbrcalories }}</td>
+          <td class="contentCell">{{ plan.prix }}</td>
+          <td class="actionCell">{{ plan.prix }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
